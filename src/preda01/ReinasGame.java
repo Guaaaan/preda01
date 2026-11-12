@@ -46,7 +46,16 @@ public class ReinasGame {
 			+ "Trace: " + verbose 
 			+ " Full output: " + full_output);
 		
-		//this.solve
+		String[] solution = this.solve(row, col);
 		
 	}
+	
+	private String[] solve(byte row, byte col) {
+		
+		String[] solution = null;
+
+		return solution;
+		
+	}
+	
 }
