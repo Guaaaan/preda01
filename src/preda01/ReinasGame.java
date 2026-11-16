@@ -11,7 +11,7 @@ public class ReinasGame {
 	private static int EMPTY = -1;
 	private static char HORSE = 'H';
 	private static char QUEEN = 'Q';
-	private static char REACHABLE = 'R'; 
+	private static char REACHABLE = 'R';
 
 	private boolean show_trace;
 	private boolean full_output;
@@ -64,8 +64,37 @@ public class ReinasGame {
 		}
 	}
 	
-	private void printFullSolution() {
+	private String buildHorizontalLine() {
+		String line = "  "; // Two leading spaces row digits
+		for (int i=0; i<ReinasGame.BOARD_SIZE; i++){
+			if (i==0)
+				line += "---";
+			else
+				line += "----";
+		}
 		
+		return line;
+	}
+	
+	private void printFullSolution() {
+
+		for (int i=ReinasGame.BOARD_SIZE - 1; i > -1; i--){
+			
+			//Print upper border before each row
+			System.out.println(this.buildHorizontalLine());
+
+			//Print row number and first pipe
+			System.out.print((i + 1) + " | ");
+			for (int j=0; j<ReinasGame.BOARD_SIZE; j++){
+				// Print square + separator at the end
+				System.out.print(this.formatSquare(i, j));
+				System.out.print((i + 1) + " | ");
+			}
+			// Last border
+			if (i==0)
+				System.out.println(this.buildHorizontalLine());
+				
+		}
 	}
 	
 	private String indexToChessPos(int row, int col) {
@@ -145,6 +174,7 @@ public class ReinasGame {
 	}
 
 	private void setVisited(int row, int col, char by) {
+
 		this.visited.put(String.valueOf(row) + String.valueOf(col), by);
 	}
 
@@ -154,6 +184,16 @@ public class ReinasGame {
 
 	private boolean isVisited(int row, int col) {
 		return (this.visited.get(this.indexOf(row, col)) != null);
+	}
+	
+	private String formatSquare(int row, int col) {
+		Character result = this.visited.get(this.indexOf(row, col));
+		if (result == ReinasGame.HORSE)
+			return "C";
+		else if (result == ReinasGame.QUEEN)
+			return "R";
+		
+		return " ";
 	}
 	
 	private boolean isValidPosition(int row, int col) {
