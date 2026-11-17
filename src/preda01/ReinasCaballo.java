@@ -9,10 +9,11 @@ public class ReinasCaballo {
 		
 		//Check params
 		int row, col;
-		row = col = 0;
+		row =0;
+		col =3;
 
 		//Instance and solve ReinasGame.java
-		ReinasGame rg = new ReinasGame(true, true);
+		ReinasGame rg = new ReinasGame(true, false);
 		rg.solve(row, col);
 	}
 
