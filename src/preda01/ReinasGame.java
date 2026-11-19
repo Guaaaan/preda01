@@ -1,6 +1,7 @@
 package preda01;
 
-import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReinasGame {
@@ -18,6 +19,8 @@ public class ReinasGame {
 	private Integer[] row_positions;
 	private Integer[] col_positions;
 	private HashMap<String, Character> visited;
+	
+	private ArrayList<String> output;
 
 
 	public ReinasGame(boolean show_trace, boolean full_output) {
@@ -28,10 +31,13 @@ public class ReinasGame {
 
 	}
 
-	public void solve(int row, int col) {
+	public List<String> solve(int row, int col) {
 		//// Init ////
 		// Init visited
-		visited = new HashMap<>();
+		this.visited = new HashMap<>();
+
+		// Init output
+		this.output = new ArrayList<>();
 
 		// Init results as -1 (empty unreachable position)
 		this.row_positions = new Integer[ReinasGame.BOARD_SIZE];
@@ -53,15 +59,31 @@ public class ReinasGame {
 			if (this.full_output)
 				this.printFullSolution();
 			else
-				System.out.println(this.getBasicSolutionOutput());
+				this.writeOutputLine(this.getBasicSolutionOutput());
 		else
-			System.out.println("No valid solution was found :(");
+			this.writeOutputLine("No valid solution was found :(");
+		
+		return this.output;
 		
 	}
 	
+	private void writeOutput(String msg) {
+		if(this.output.size() == 0)
+			this.output.add(msg);
+		else
+			this.output.add(
+				this.output.size() - 1,
+				this.output.getLast() + msg);
+	} 
+
+	private void writeOutputLine(String msg) {
+		this.writeOutput(msg);
+		this.output.add("");
+	} 
+	
 	private void log(String msg) {
 		if(this.show_trace)
-			System.out.println(msg);
+			this.writeOutputLine(msg);
 	}
 	
 	
@@ -93,26 +115,26 @@ public class ReinasGame {
 		for (int i=ReinasGame.BOARD_SIZE - 1; i > -1; i--){
 			
 			//Print upper border before each row
-			System.out.println(this.buildHorizontalLine());
+			this.writeOutputLine(this.buildHorizontalLine());
 
 			//Print row number and first pipe
-			System.out.print((i + 1) + " | ");
+			this.writeOutput((i + 1) + " | ");
 			for (int j=0; j<ReinasGame.BOARD_SIZE; j++){
 				// Print square + separator at the end
-				System.out.print(this.formatSquare(i, j));
-				System.out.print(" | ");
+				this.writeOutput(this.formatSquare(i, j));
+				this.writeOutput(" | ");
 			}
-			System.out.println("");
+			this.writeOutputLine("");
 			// Last border
 			if (i==0)
-				System.out.println(this.buildHorizontalLine());
+				this.writeOutputLine(this.buildHorizontalLine());
 				
 		}
 	}
 	
 	private String indexToChessPos(int row, int col) {
 		if(row < 0)
-			return "¿?";
+			return "ï¿½?";
 		return String.valueOf(row + 1) + "abcdefgh".charAt(col);
 	}
 	
