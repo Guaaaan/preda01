@@ -1,5 +1,7 @@
 package preda01;
+import java.io.BufferedReader;
 import java.io.File;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
@@ -17,6 +19,7 @@ public class ReinasCaballo {
 	private static int row;
 	private static File source;
 	private static Path destination;
+	private static Charset charset;
 
 
 	public static void main(String[] args) {
@@ -25,13 +28,17 @@ public class ReinasCaballo {
 		ReinasCaballo.graph = false;
 		ReinasCaballo.help = false;
 		
+		// Set charset
+		ReinasCaballo.charset = StandardCharsets.UTF_8;
+		
 		args = new String[]{"a", "b", "c"};
 		args = new String[]{"-h"};
 		args = new String[]{};
 		args = new String[]{"-h", "-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test", "./output.txt"};
-		args = new String[]{"-h", "-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test/source", "./output.txt"};
+		args = new String[]{"-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test/source", "./output.txt"};
+		args = new String[]{"-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test/bad_source", "./output.txt"};
 
-		// Define arguments
+		// Parse arguments
 		try {
 			ReinasCaballo.parseArgs(args);
 		} catch (Exception e) {
@@ -47,6 +54,13 @@ public class ReinasCaballo {
 				return;
 		}
 		
+		// Open source file
+		try {
+			ReinasCaballo.readSource();
+		} catch (Exception e) {
+			System.out.println("ERROR reading file. No position found");
+		}
+		
 		ReinasGame rg = new ReinasGame(ReinasCaballo.trace, ReinasCaballo.graph);
 		try
 		{
@@ -57,8 +71,18 @@ public class ReinasCaballo {
 		}
 	}
 	
-	private static void readSource() {
-		
+	private static void readSource() throws Exception{
+		String horse_pos;
+		try (BufferedReader br = Files.newBufferedReader(
+					Paths.get(ReinasCaballo.source.getAbsolutePath()),
+					ReinasCaballo.charset)){
+			horse_pos = br.readLine().strip(); 
+		}
+		ReinasCaballo.row = Integer.parseInt(
+				(String)horse_pos.subSequence(0, 1)) - 1;
+		ReinasCaballo.col = "abcdefgh".indexOf(
+				(String)horse_pos.subSequence(1, 2));
+        
 	}
 	
 	private static void writeOutput(List<String> result) throws Exception{
@@ -110,7 +134,7 @@ public class ReinasCaballo {
         }
 			
         // Check optional args
-		for(int i=args.length - 3; i>0; i--) {
+		for(int i=args.length - 3; i>-1; i--) {
 			switch(args[i]) {
 			case "-t":
 				ReinasCaballo.trace = true;

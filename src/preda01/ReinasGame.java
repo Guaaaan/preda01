@@ -68,15 +68,17 @@ public class ReinasGame {
 	}
 	
 	private void writeOutput(String msg) {
+		// Write in last if present
 		if(this.output.size() == 0)
 			this.output.add(msg);
 		else
-			this.output.add(
+			this.output.set(
 				this.output.size() - 1,
 				this.output.getLast() + msg);
 	} 
 
 	private void writeOutputLine(String msg) {
+		// Write in last and add new line
 		this.writeOutput(msg);
 		this.output.add("");
 	} 
