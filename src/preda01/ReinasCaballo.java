@@ -31,16 +31,6 @@ public class ReinasCaballo {
 		
 		// Set charset
 		ReinasCaballo.charset = StandardCharsets.UTF_8;
-		/*
-		for(int i=0; i<args.length; i++)
-			System.out.println(args[i]);
-		args = new String[]{"a", "b", "c"};
-		args = new String[]{"-h"};
-		args = new String[]{};
-		args = new String[]{"-h", "-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test", "./output.txt"};
-		args = new String[]{"-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test/source", "./output.txt"};
-		args = new String[]{"-t", "-g", "/home/jgotor/eclipse-workspace/preda01/test/bad_source", "./output.txt"};
-		*/
 
 		// Parse arguments
 		try {
@@ -107,7 +97,7 @@ public class ReinasCaballo {
 				ReinasCaballo.help = true;
 				return;
 			}
-			throw new Exception("Source file does not exist.");
+			throw new Exception("Files missing.");
 		}
 
 		
@@ -162,9 +152,9 @@ public class ReinasCaballo {
 		System.out.println("SINTAXIS: reinasCaballo [-t][-h] [-g] [fichero entrada] [fichero salida]");
 		System.out.println("          -t Traza cada paso");
 		System.out.println("          -h Muestra esta ayuda");
-		System.out.println("          -g Modo salida gr�fica");
-		System.out.println("          [fichero entrada] Posici�n del caballo (filacolumna)");
-		System.out.println("          [fichero salida] Posiciones del caballo y de las reinas, o tablero gr�fico");
+		System.out.println("          -g Modo salida gráfica");
+		System.out.println("          [fichero entrada] Posición del caballo (filacolumna)");
+		System.out.println("          [fichero salida] Posiciones del caballo y de las reinas, o tablero gráfico");
 	}
 
 }
