@@ -56,9 +56,10 @@ public class ReinasCaballo {
 		}
 		
 		ReinasGame rg = new ReinasGame(ReinasCaballo.trace, ReinasCaballo.graph);
+		List<String> solution = rg.solve(ReinasCaballo.row, ReinasCaballo.col);
 		try
 		{
-			ReinasCaballo.writeOutput(rg.solve(ReinasCaballo.row, ReinasCaballo.col));
+			ReinasCaballo.writeOutput(solution);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 			System.out.println("Error: " + e.getMessage());

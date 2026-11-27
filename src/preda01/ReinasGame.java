@@ -61,7 +61,7 @@ public class ReinasGame {
 			else
 				this.writeOutputLine(this.getBasicSolutionOutput());
 		else
-			this.writeOutputLine("No valid solution was found :(");
+			this.writeOutputLine(this.getBasicSolutionOutput());
 		
 		return this.output;
 		
@@ -104,7 +104,7 @@ public class ReinasGame {
 		String line = "  "; // Two leading spaces row digits
 		for (int i=0; i<ReinasGame.BOARD_SIZE; i++){
 			if (i==0)
-				line += "---";
+				line += "-----";
 			else
 				line += "----";
 		}
@@ -132,11 +132,20 @@ public class ReinasGame {
 				this.writeOutputLine(this.buildHorizontalLine());
 				
 		}
+		// Print letters on bottom
+		this.writeOutput("  "); // leading spaces for row numbers
+		for (int i=0; i<ReinasGame.BOARD_SIZE; i++) {
+			if (i==0)
+				this.writeOutput("  ");
+			
+			this.writeOutput("abcdefgh".charAt(i) + "   ");
+
+		}
 	}
 	
 	private String indexToChessPos(int row, int col) {
 		if(row < 0)
-			return "�?";
+			return "??";
 		return String.valueOf(row + 1) + "abcdefgh".charAt(col);
 	}
 	
